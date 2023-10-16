@@ -1,35 +1,39 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import "./index.css";
+import {
+  clearCount,
+  getCount,
+  minusCount,
+  plusCount,
+} from "./redux/slice/countSlice";
 
 function App() {
-  const [count, setCount] = useState(0)
-
+  const count = useSelector((state) => state.count);
+  const dispatch = useDispatch();
+  useEffect(() => {
+    dispatch(getCount());
+  }, []);
+  const plus = () => {
+    dispatch(plusCount(count.id));
+  };
+  const minus = () => {
+    dispatch(minusCount(count.id));
+  };
+  const clear = () => {
+    dispatch(clearCount(count.id));
+  };
   return (
-    <>
-      <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
+    <div className="count">
+      <p>Count</p>
+      <h1>{count.count}</h1>
+      <div className="btns">
+        <button onClick={plus}>+</button>
+        <button onClick={minus}>-</button>
+        <button onClick={clear}>clear</button>
       </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
-  )
+    </div>
+  );
 }
 
-export default App
+export default App;
