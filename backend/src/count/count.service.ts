@@ -8,7 +8,7 @@ export class CountService {
     const findCount = await this.dataBase.count.findFirst();
     if (!findCount) {
       throw new HttpException(
-        'Не удалось обновить цифру',
+        'Не удалось получить цифру',
         HttpStatus.BAD_REQUEST,
       );
     } else {
