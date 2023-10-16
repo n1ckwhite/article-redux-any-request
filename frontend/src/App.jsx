@@ -10,6 +10,7 @@ import {
 
 function App() {
   const count = useSelector((state) => state.count);
+  const error = useSelector((state) => state.count.error);
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(getCount());
@@ -26,6 +27,7 @@ function App() {
   return (
     <div className="count">
       <p>Count</p>
+      <p className="error">{error.message}</p>
       <h1>{count.count}</h1>
       <div className="btns">
         <button onClick={plus}>+</button>

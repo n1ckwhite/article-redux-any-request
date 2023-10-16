@@ -13,8 +13,8 @@ export const getCount = createAsyncThunk("getCount", async () => {
   try {
     const response = await axios.get(`${API}`);
     return response.data;
-  } catch (error) {
-    return new Error("Не удалось получить цифру").message;
+  } catch (e) {
+    throw new Error("Не удалось изменить профиль").message;
   }
 });
 
@@ -24,8 +24,8 @@ export const plusCount = createAsyncThunk("plusCount", async (id) => {
       id,
     });
     return response.data;
-  } catch (error) {
-    return new Error("Не удалось обновить цифру").message;
+  } catch (e) {
+    throw new Error("Не удалось изменить профиль").message;
   }
 });
 
@@ -35,8 +35,8 @@ export const minusCount = createAsyncThunk("minusCount", async (id) => {
       id,
     });
     return response.data;
-  } catch (error) {
-    return new Error("Не удалось обновить цифру").message;
+  } catch (e) {
+    throw new Error("Не удалось изменить профиль").message;
   }
 });
 export const clearCount = createAsyncThunk("clearCount", async (id) => {
@@ -45,8 +45,8 @@ export const clearCount = createAsyncThunk("clearCount", async (id) => {
       id,
     });
     return response.data;
-  } catch (error) {
-    return new Error("Не удалось очистить цифру").message;
+  } catch (e) {
+    throw new Error("Не удалось изменить профиль").message;
   }
 });
 
@@ -61,7 +61,8 @@ export const countSlice = createSlice({
       builder.addMatcher(isAnyOf(getCount.fulfilled), (state, action) => {
         state.id = action.payload.id;
         state.count = action.payload.count;
-        (state.pending = false), (state.error = "");
+        state.error = "";
+        state.pending = false;
       });
     builder.addMatcher(isAnyOf(getCount.rejected), (state, action) => {
       (state.error = action.error), (state.pending = false);
@@ -71,7 +72,9 @@ export const countSlice = createSlice({
     }),
       builder.addMatcher(isAnyOf(plusCount.fulfilled), (state, action) => {
         state.count = action.payload.count;
-        (state.pending = false), (state.error = "");
+        state.error = "";
+
+        state.pending = false;
       });
     builder.addMatcher(isAnyOf(plusCount.rejected), (state, action) => {
       (state.error = action.error), (state.pending = false);
@@ -81,7 +84,9 @@ export const countSlice = createSlice({
     }),
       builder.addMatcher(isAnyOf(minusCount.fulfilled), (state, action) => {
         state.count = action.payload.count;
-        (state.pending = false), (state.error = "");
+        state.error = "";
+
+        state.pending = false;
       });
     builder.addMatcher(isAnyOf(minusCount.rejected), (state, action) => {
       (state.error = action.error), (state.pending = false);
@@ -91,10 +96,12 @@ export const countSlice = createSlice({
     }),
       builder.addMatcher(isAnyOf(clearCount.fulfilled), (state, action) => {
         state.count = action.payload.count;
-        (state.pending = false), (state.error = "");
+        state.error = "";
+        state.pending = false;
       });
     builder.addMatcher(isAnyOf(clearCount.rejected), (state, action) => {
-      (state.error = action.error), (state.pending = false);
+      state.pending = false;
+      state.error = action.error;
     });
   },
 });
