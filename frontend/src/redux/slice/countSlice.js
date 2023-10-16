@@ -14,7 +14,7 @@ export const getCount = createAsyncThunk("getCount", async () => {
     const response = await axios.get(`${API}`);
     return response.data;
   } catch (e) {
-    throw new Error("Не удалось изменить профиль").message;
+    throw new Error("Не получить цифру").message;
   }
 });
 
@@ -25,7 +25,7 @@ export const plusCount = createAsyncThunk("plusCount", async (id) => {
     });
     return response.data;
   } catch (e) {
-    throw new Error("Не удалось изменить профиль").message;
+    throw new Error("Не удалось обновить цифру").message;
   }
 });
 
@@ -36,7 +36,7 @@ export const minusCount = createAsyncThunk("minusCount", async (id) => {
     });
     return response.data;
   } catch (e) {
-    throw new Error("Не удалось изменить профиль").message;
+    throw new Error("Не удалось обновить цифру").message;
   }
 });
 export const clearCount = createAsyncThunk("clearCount", async (id) => {
@@ -46,7 +46,7 @@ export const clearCount = createAsyncThunk("clearCount", async (id) => {
     });
     return response.data;
   } catch (e) {
-    throw new Error("Не удалось изменить профиль").message;
+    throw new Error("Не удалось обновить цифру").message;
   }
 });
 

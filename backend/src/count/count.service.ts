@@ -5,7 +5,15 @@ import { DatabaseService } from 'src/database/database.service';
 export class CountService {
   constructor(private readonly dataBase: DatabaseService) {}
   async getCount() {
-    return this.dataBase.count.findFirst();
+    const findCount = await this.dataBase.count.findFirst();
+    if (!findCount) {
+      throw new HttpException(
+        'Не удалось обновить цифру',
+        HttpStatus.BAD_REQUEST,
+      );
+    } else {
+      return findCount;
+    }
   }
   async plusCount(id: string) {
     const findCount = await this.dataBase.count.findUnique({
